@@ -12,13 +12,21 @@ class Post extends Model
     use SoftDeletes;
     protected $fillable = [
         'title',
-        'body'
+        'body',
+        'category_id'
         ];
     
-    public function getPaginateByLimit(int $limit_count = 10)
+    function getPaginateByLimit(int $limit_count = 5)
     {
-    return $this->orderBy('updated_at', 'DESC')->paginate($limit_count);
+    return $this::with('category')->orderBy('updated_at', 'DESC')->paginate($limit_count);
     }
+    
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+    
+    
 }
 
 // ”orderBy”と”limit”はLaravelの変えることができない定義済みメソッド
