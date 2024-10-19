@@ -1,19 +1,14 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <title>Blog</title>
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,699" rel="stylesheet">
-    </head>
-    <body>
+<x-app-layout>
+     <x-slot name="header">
+        {{ Auth::user()->name }}　ブログ一覧
+    </x-slot>
         <a href='/posts/create'>create</a>
         <h1>Proactの軌跡</h1>
         <div class='posts'>
             @foreach ($posts as $post)
                 <div class='post'>
-                    <h2 class='title'><a href="/posts/{{ $post->id }}">{{ $post->title }}</a></h2>
-                    <a href="/categories/{{ $post->category->id }}">{{ $post->category->name }}</a>
+                    <h2 class='text-blue-500'><a href="/posts/{{ $post->id }}">{{ $post->title }}</a></h2>
+                    <a class='text-blue-500' href="/categories/{{ $post->category->id }}">{{ $post->category->name }}</a>
                     <p class='body'>{{ $post->body }}</p>
                     <form action="/posts/{{ $post->id }}" id="form_{{$post->id}}" method="post">
                         @csrf
@@ -35,7 +30,4 @@
                 }
             }
         </script>
-       
-    </body>
-    
-</html>
+</x-app-layout>
